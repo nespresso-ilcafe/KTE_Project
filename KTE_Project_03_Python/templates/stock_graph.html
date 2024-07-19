@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Graph</title>
+    <!-- Plotly.js 라이브러리 -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js">
+</head>
+<body>
+    <!-- 사용자 입력 폼 -->
+    <div class="container chart-center" style="text-align:center;">
+        <form id="stock_form" action="/stock_graph" method="post" class="row g-3">
+        <input type="hidden" id="stock_code" name="stock_code" value="{{ stock_code }}" required>
+            <input type="date" id="start_date" name="start_date" class="form-control" required>
+            <input type="date" id="end_date" name="end_date" class="form-control" required>
+            <button type="submit" class="btn btn-primary w-100">그래프 보기</button>
+        </form>
+    </div>
+
+    <div class="chart-container" style="width: 100%; overflow-x: auto;">
+        <div id="plotly_chart" class="border rounded" style="height: 500px;"></div>
+    </div>
+
+    {% if graph_data %}
+    <script type="text/javascript">
+        var graph_data = {{ graph_data | safe }};
+        Plotly.newPlot('plotly_chart', graph_data.data, graph_data.layout);
+    </script>
+    {% endif %}
+
+    <!-- 날짜 유효성 검사 스크립트 -->
+    <script>
+        document.getElementById('stock_form').addEventListener('submit', function(event) {
+            var startDate = document.getElementById('start_date').value;
+            var endDate = document.getElementById('end_date').value;
+
+            if (startDate > endDate) {
+                alert("시작일자는 종료일자보다 이전이어야 합니다.");
+                event.preventDefault(); // 폼 제출을 막음
+            }
+        });
+    </script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+</body>
+</html>

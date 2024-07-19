@@ -1,0 +1,26 @@
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div style="width:430px;text-align:right;">
+    <input type="button" value="1주" onclick="updateGraph(7)">
+    <input type="button" value="1달" onclick="updateGraph(30)">
+    <input type="button" value="3달" onclick="updateGraph(90)">
+    <input type="button" value="6달" onclick="updateGraph(180)">
+</div>
+<div style="text-align:center;" id="graph"></div>
+
+<script type="text/javascript">
+    // Initial graph load
+    var initialGraphJSON = {{ graphJSON | safe }};
+    Plotly.newPlot('graph', initialGraphJSON.data, initialGraphJSON.layout);
+
+    function updateGraph(days) {
+        $.post("/update_graph", {days: days}, function(response) {
+            if (response.error) {
+                alert(response.error);
+            } else {
+                var graphJSON = JSON.parse(response);
+                Plotly.react('graph', graphJSON.data, graphJSON.layout);
+            }
+        });
+    }
+</script>

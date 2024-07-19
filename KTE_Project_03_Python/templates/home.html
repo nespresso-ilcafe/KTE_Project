@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Chart</title>
+      <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<center>
+    <h1>Stock Chart</h1>
+    <form method="POST" action="/">
+        <label for="start_date" style="border:1px solid black;">Start Date:
+        <input type="date" id="start_date" name="start_date" required></label>
+        <label for="end_date" style="border:1px solid black;">End Date:
+        <input type="date" id="end_date" name="end_date" required></label>
+        <label for="stock_code" style="border:1px solid black;">Stock Code:
+        <input type="text" id="stock_code_input" name="stock_code" required></label>
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if initial_graph %}
+        <h2>차트보기 {{ stock_code }}</h2>
+        <iframe id="chart" src="{{ initial_graph }}" style="width:900px; height:600px; border:1px solid black;"></iframe>
+    {% endif %}
+    </center>
+</body>
+</html>
