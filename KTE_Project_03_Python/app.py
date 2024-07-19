@@ -29,7 +29,7 @@ from pdfminer.high_level import extract_text
 
 # MySQL 연결 설정
 db_config = {
-    'user': 'user1',
+    'user': 'user2',
     'password': '1111',
     'host': '192.168.0.110',
     'port': 3307,
@@ -346,7 +346,7 @@ def generate_response_polio(stock_ids):
     def get_stock_data(stock_id):
         # 데이터베이스 연결 설정
         db_config = {
-            'user': 'user1',
+            'user': 'user2',
             'password': '1111',
             'host': '192.168.0.110',
             'port': 3307,
