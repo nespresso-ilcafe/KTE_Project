@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주가 예측</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .result-item {
+            margin-bottom: 10px;
+        }
+        .input-container {
+            margin-bottom: 20px;
+        }
+        .input-container label {
+            margin-right: 10px;
+        }
+        .input-container input {
+            padding: 5px;
+            width: 150px;
+        }
+        .submit-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>주가 예측</h1>
+
+    <form method="POST" action="/">
+        <div class="input-container">
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date">
+
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date">
+
+            <label for="stock_code">Stock Code:</label>
+            <input type="text" id="stock_code" name="stock_code">
+
+            <button type="button" class="submit-btn" onclick="getPrediction()">Get Prediction</button>
+        </div>
+    </form>
+
+
+    <div class="results">
+        <div class="result-item">
+            <strong>모델 A : </strong> <span id="linear_avg"></span>
+        </div>
+        <div class="result-item">
+            <strong>모델 B : </strong> <span id="svm_avg"></span>
+        </div>
+        <div class="result-item">
+            <strong>모델 C : </strong> <span id="rf_avg"></span>
+        </div>
+        <div class="result-item">
+            <strong>모델 D : </strong> <span id="lstm_avg"></span>
+        </div>
+        <div class="result-item">
+            <strong>모델 E : </strong> <span id="xgboost_avg"></span>
+        </div>
+        <div class="result-item">
+            <strong>모델 평균 : </strong> <span id="avg_prediction"></span>
+        </div>
+        <div class="result-item">
+            <strong>현재 주가 : </strong> <span id="current_price"></span>
+        </div>
+        <div class="result-item">
+            <strong>주가 예상 : </strong> <span id="next_day_prediction"></span>
+        </div>
+    </div>
+
+    <script>
+        function getPrediction() {
+            var formData = new FormData();
+            formData.append('start_date', document.getElementById('start_date').value);
+            formData.append('end_date', document.getElementById('end_date').value);
+            formData.append('stock_code', document.getElementById('stock_code').value);
+
+            fetch('/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('linear_avg').textContent = data['모델A'].toFixed(2);
+                document.getElementById('svm_avg').textContent = data['모델B'].toFixed(2);
+                document.getElementById('rf_avg').textContent = data['모델C'].toFixed(2);
+                document.getElementById('lstm_avg').textContent = data['모델D'].toFixed(2);
+                document.getElementById('xgboost_avg').textContent = data['모델E'].toFixed(2);
+                document.getElementById('avg_prediction').textContent = data['모델 평균'].toFixed(2);
+                document.getElementById('current_price').textContent = data['금일 주가'].toFixed(2);
+                document.getElementById('next_day_prediction').textContent = data['예상'];
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+        }
+    </script>
+</body>
+</html>

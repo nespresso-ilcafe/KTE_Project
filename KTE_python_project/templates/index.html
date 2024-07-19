@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock News</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        img {
+            max-width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stock News</h1>
+
+    <div>
+        <h2>Stock News List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Image</th>
+                    <th>감정분석</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for news_item in news_data %}
+                    <tr>
+                        <td>{{ news_item.title }}</td>
+                        <td>{{ news_item.content }}</td>
+                        <td>
+                            {% if news_item.image_file_names %}
+                            <img src="{{ url_for('send_image', folder='index', filename=news_item.image_file_names) }}" alt="News Image">
+                            {% endif %}
+                        </td>
+                        <td>{{ item.sentimentPrediction }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
