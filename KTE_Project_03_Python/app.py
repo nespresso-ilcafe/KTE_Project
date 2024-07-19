@@ -98,8 +98,8 @@ def home():
 
     return render_template('home.html')
 # 전역 변수 설정
-APP_KEY = 'PSjH9QbJbF6Z11E76k03pCqGuzGcVc66EXP4'
-APP_SECRET = '201tsdBa0pDidMRtEcasbBus0ZtBRW7kGN1JJLfW4ikWiKVi6mS8AUQdA9lLhJetkvwQ/e6B2MbbjaeLc4AyXA8WHrtTg0H+uSN+GGBBvnFvQI0mLlUC2vt1jDxSrCr/mGRBdZgOBRUXtwxbeyimDSKZJqjnBAvrpj589zq7SO8g4xyK1iY='
+APP_KEY = ''
+APP_SECRET = ''
 ACCESS_TOKEN = None
 
 # 토큰 발급용 함수
@@ -128,7 +128,7 @@ def get_token(APP_KEY, APP_SECRET):
 
 
 # Vertex AI를 지정된 프로젝트 및 위치로 초기화합니다.
-vertexai.init(project="steady-shard-429705-e9", location="asia-northeast3")
+vertexai.init(project="", location="")
 
 # gemini-1.5-pro-001 모델을 사용하여 Geget_tokennerativeModel 인스턴스를 생성합니다.
 model = GenerativeModel("gemini-1.5-pro-001")
