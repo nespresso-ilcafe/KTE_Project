@@ -2,7 +2,7 @@
 
 ## 사용 툴:
 
-#### JSP, Spring MVC, Python
+#### JSP, Spring MVC, Python, MariaDB, Sequal Pro
 ---
 ## 프로젝트 기간:
 
